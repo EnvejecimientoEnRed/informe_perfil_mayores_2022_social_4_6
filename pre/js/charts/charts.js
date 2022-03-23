@@ -104,7 +104,13 @@ export function initChart(iframe) {
                         let posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
                         let posC = outerArc.centroid(d); // Label position = almost the same as posB
                         let midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
-                        posC[0] = radius * 0.8 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+                        if(d.index == 1) {
+                            posC[0] = radius * 0.4 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+                            posB[1] = -110;
+                            posC[1] = -110;
+                        } else {
+                            posC[0] = radius * 0.8 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+                        }                        
                         return [posA, posB, posC]
                     }                    
                 });
@@ -123,7 +129,11 @@ export function initChart(iframe) {
                         let pos = outerArc.centroid(d);
                         let midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
                         pos[0] = radius * 0.9 * (midangle < Math.PI ? 1 : -1);
-                        return 'translate(' + pos + ')';
+                        if(d.index == 1) {
+                            pos = [55,-100];
+                        }
+
+                        return 'translate(' + pos + ')';                        
                     }                    
                 })
                 .style('text-anchor', function(d) {
@@ -153,18 +163,12 @@ export function initChart(iframe) {
                 .attr("stroke-width", 1)
                 .attr('points', function(d) {
                     if(d.value != 0) {
-                        console.log(d);
                         let posA = arc.centroid(d) // line insertion in the slice
                         let posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
                         let posC = outerArc.centroid(d); // Label position = almost the same as posB
                         let midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
                         posC[0] = radius * 0.8 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
-                        if(d.index == 6) {
-                            return [posA, posB];
-                        } else {
-                            return [posA, posB, posC];
-                        }
-                        
+                        return [posA, posB, posC];                        
                     }                    
                 });
 
@@ -182,9 +186,7 @@ export function initChart(iframe) {
                         let pos = outerArc.centroid(d);
                         let midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
                         pos[0] = radius * 0.9 * (midangle < Math.PI ? 1 : -1);
-                        if(d.index == 6) {
-                            pos[0] = 20;
-                        } 
+                        
 
                         return 'translate(' + pos + ')';
                     }                    
