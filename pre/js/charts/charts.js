@@ -81,11 +81,21 @@ export function initChart(iframe) {
                 .data(data_hombres)
                 .enter()
                 .append('path')
-                .attr('d', arc)
+                //.attr('d', arc)
                 .attr('fill', function(d){ return(color(d.data.value.EFFEMP)); })
                 .attr("stroke", "white")
                 .style("stroke-width", "0.25px")
-                .style("opacity", 1);
+                .style("opacity", 1)
+                .transition()
+                .delay(function(d, i) { return i * 400; })
+                .duration(400)
+                .attrTween('d', function(d) {
+                    let i = d3.interpolate(d.startAngle, d.endAngle);
+                    return function(t) {
+                        d.endAngle = i(t);
+                        return arc(d);
+                    }
+                });
 
             // Add the polylines between chart and labels:
             chart1.selectAll('menPolylines')
@@ -120,7 +130,7 @@ export function initChart(iframe) {
                 .transition()
                 .ease(d3.easeLinear)
                 .attr("stroke-dashoffset", 0)
-                .delay(2000)
+                .delay(2100)
                 .duration(2000);
 
             chart1.selectAll('menLabels')
@@ -153,7 +163,7 @@ export function initChart(iframe) {
                 })
                 .style('opacity', 0)
                 .transition()
-                .delay(2000)
+                .delay(2100)
                 .duration(2000)
                 .style('opacity',1);
             
@@ -162,11 +172,21 @@ export function initChart(iframe) {
                 .data(data_mujeres)
                 .enter()
                 .append('path')
-                .attr('d', arc)
+                //.attr('d', arc)
                 .attr('fill', function(d){ return(color(d.data.value.EFFEMP)); })
                 .attr("stroke", "white")
                 .style("stroke-width", "0.25px")
-                .style("opacity", 1);
+                .style("opacity", 1)
+                .transition()
+                .delay(function(d, i) { return i * 400; })
+                .duration(400)
+                .attrTween('d', function(d) {
+                    let i = d3.interpolate(d.startAngle, d.endAngle);
+                    return function(t) {
+                        d.endAngle = i(t);
+                        return arc(d);
+                    }
+                });
 
             chart2.selectAll('womenPolylines')
                 .data(data_mujeres)
@@ -194,7 +214,7 @@ export function initChart(iframe) {
             .transition()
             .ease(d3.easeLinear)
             .attr("stroke-dashoffset", 0)
-            .delay(2000)
+            .delay(2100)
             .duration(2000);
 
             chart2.selectAll('womenLabels')
@@ -225,7 +245,7 @@ export function initChart(iframe) {
                 })
                 .style('opacity', 0)
                 .transition()
-                .delay(2000)
+                .delay(2100)
                 .duration(2000)
                 .style('opacity',1);
         }
