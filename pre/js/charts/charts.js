@@ -1,28 +1,24 @@
 //Desarrollo de las visualizaciones
 import * as d3 from 'd3';
-import { numberWithCommas2 } from '../helpers';
-//import { getInTooltip, getOutTooltip, positionTooltip } from './modules/tooltip';
+import { numberWithCommas3 } from '../helpers';
 import { setChartHeight } from '../modules/height';
 import { setChartCanvas, setChartCanvasImage } from '../modules/canvas-image';
 import { setRRSSLinks } from '../modules/rrss';
 import { setFixedIframeUrl } from './chart_helpers';
 
 //Colores fijos
-const COLOR_PRIMARY_1 = '#F8B05C', 
-COLOR_PRIMARY_2 = '#E37A42', 
-COLOR_ANAG_1 = '#D1834F', 
-COLOR_ANAG_2 = '#BF2727', 
-COLOR_COMP_1 = '#528FAD', 
-COLOR_COMP_2 = '#AADCE0', 
-COLOR_GREY_1 = '#B5ABA4', 
-COLOR_GREY_2 = '#64605A', 
-COLOR_OTHER_1 = '#B58753', 
-COLOR_OTHER_2 = '#731854';
+const COLOR_PRIMARY_1 = '#F8B05C',
+COLOR_ANAG_PRIM_1 = '#BA9D5F', 
+COLOR_ANAG_PRIM_2 = '#9E6C51',
+COLOR_ANAG_PRIM_3 = '#9E3515',
+COLOR_GREY_1 = '#D6D6D6';
 
 export function initChart(iframe) {
     //Desarrollo del gráfico
     d3.csv('https://raw.githubusercontent.com/CarlosMunozDiazCSIC/informe_perfil_mayores_2022_social_4_6/main/data/efectos_cuidado_empleo_eurostat_v2.csv', function(error,data) {
         if (error) throw error;
+
+        let pathsMen, pathsWomen;
 
         //Trazado de nuevos arrays
         let dataHombres = data.filter(function(item) {
@@ -33,9 +29,9 @@ export function initChart(iframe) {
         });
 
         //Círculo para cuidadores de hombres
-        let width = 300,
-            height = 300,
-            margin = 20;
+        let width = 302,
+            height = 302,
+            margin = 22;
 
         let radius = Math.min(width, height) / 2 - margin;
 
@@ -49,7 +45,7 @@ export function initChart(iframe) {
 
         let color = d3.scaleOrdinal()
             .domain(data.map(function(item) { return item.EFFEMP; }).keys())
-            .range([COLOR_PRIMARY_1, COLOR_COMP_2, COLOR_COMP_1, COLOR_OTHER_1, COLOR_GREY_1]); 
+            .range([COLOR_PRIMARY_1, COLOR_ANAG_PRIM_1, COLOR_ANAG_PRIM_2, COLOR_ANAG_PRIM_3, COLOR_GREY_1]); 
 
         let pieHombres = d3.pie()
             .sort(null)
@@ -80,6 +76,7 @@ export function initChart(iframe) {
         let data_mujeres = pieMujeres(d3.entries(dataMujeres));
 
         function init() {
+            //////// HOMBRES
             chart1.selectAll('menSlices')
                 .data(data_hombres)
                 .enter()
@@ -95,6 +92,7 @@ export function initChart(iframe) {
                 .data(data_hombres)
                 .enter()
                 .append('polyline')
+                .attr('class','rectMen')
                 .attr("stroke", "black")
                 .style("fill", "none")
                 .attr("stroke-width", 1)
@@ -115,20 +113,31 @@ export function initChart(iframe) {
                     }                    
                 });
 
+            pathsMen = chart1.selectAll('.rectMen');
+
+            pathsMen.attr("stroke-dasharray", 968 + " " + 968)
+                .attr("stroke-dashoffset", 968)
+                .transition()
+                .ease(d3.easeLinear)
+                .attr("stroke-dashoffset", 0)
+                .delay(2000)
+                .duration(2000);
+
             chart1.selectAll('menLabels')
                 .data(data_hombres)
                 .enter()
                 .append('text')
+                .attr('class', 'chart_text')
                 .text( function(d) {
                     if(d.value != 0) {
-                        return parseFloat(d.data.value.valor_porc).toFixed(1); 
+                        return numberWithCommas3(parseFloat(d.data.value.valor_porc).toFixed(1)) + '%'; 
                     }                    
                 })
                 .attr('transform', function(d) {
                     if(d.value != 0) {
                         let pos = outerArc.centroid(d);
                         let midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-                        pos[0] = radius * 0.9 * (midangle < Math.PI ? 1 : -1);
+                        pos[0] = radius * 0.85 * (midangle < Math.PI ? 1 : -1);
                         if(d.index == 1) {
                             pos = [55,-100];
                         }
@@ -141,9 +150,14 @@ export function initChart(iframe) {
                         let midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
                         return (midangle < Math.PI ? 'start' : 'end');
                     }                    
-                });
+                })
+                .style('opacity', 0)
+                .transition()
+                .delay(2000)
+                .duration(2000)
+                .style('opacity',1);
             
-            ///Mujeres
+            ///////// MUJERES
             chart2.selectAll('womenSlices')
                 .data(data_mujeres)
                 .enter()
@@ -158,6 +172,7 @@ export function initChart(iframe) {
                 .data(data_mujeres)
                 .enter()
                 .append('polyline')
+                .attr('class','rectWomen')
                 .attr("stroke", "black")
                 .style("fill", "none")
                 .attr("stroke-width", 1)
@@ -172,20 +187,31 @@ export function initChart(iframe) {
                     }                    
                 });
 
+            pathsWomen = chart2.selectAll('.rectWomen');
+
+            pathsWomen.attr("stroke-dasharray", 968 + " " + 968)
+            .attr("stroke-dashoffset", 968)
+            .transition()
+            .ease(d3.easeLinear)
+            .attr("stroke-dashoffset", 0)
+            .delay(2000)
+            .duration(2000);
+
             chart2.selectAll('womenLabels')
                 .data(data_mujeres)
                 .enter()
                 .append('text')
+                .attr('class', 'chart_text')
                 .text( function(d) {
                     if(d.value != 0) {
-                        return parseFloat(d.data.value.valor_porc).toFixed(1); 
+                        return numberWithCommas3(parseFloat(d.data.value.valor_porc).toFixed(1)) + '%'; 
                     }                    
                 })
                 .attr('transform', function(d) {
                     if(d.value != 0) {
                         let pos = outerArc.centroid(d);
                         let midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-                        pos[0] = radius * 0.9 * (midangle < Math.PI ? 1 : -1);
+                        pos[0] = radius * 0.85 * (midangle < Math.PI ? 1 : -1);
                         
 
                         return 'translate(' + pos + ')';
@@ -196,7 +222,12 @@ export function initChart(iframe) {
                         let midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
                         return (midangle < Math.PI ? 'start' : 'end');
                     }                    
-                });
+                })
+                .style('opacity', 0)
+                .transition()
+                .delay(2000)
+                .duration(2000)
+                .style('opacity',1);
         }
 
         /////

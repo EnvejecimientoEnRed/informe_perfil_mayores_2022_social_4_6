@@ -23,35 +23,29 @@
                 <div class="chart__logics">
                     <div class="chart__legend">
                         <span class="chart__legend--item primary_1">Interrupción del trabajo</span>
-                        <span class="chart__legend--item comp_2">Reducción tiempo de trabajo</span>
-                        <span class="chart__legend--item comp_1">Ni interrupción ni reducción</span>
-                        <span class="chart__legend--item other_1">No ha tenido responsabilidades de cuidado</span>
+                        <span class="chart__legend--item anag_prim_1">Reducción tiempo de trabajo</span>
+                        <span class="chart__legend--item anag_prim_2">Ni interrupción ni reducción</span>
+                        <span class="chart__legend--item anag_prim_3">No ha tenido responsabilidades de cuidado</span>
                         <span class="chart__legend--item grey_1">NS/NC</span>
-                    </div>
-                    <div class="chart__animate" id="replay">
-                        <button class="btn btn__animate">
-                            <i class="fa fa--share fa-repeat" aria-hidden="true"></i>
-                            <span>Animar gráfico</span>
-                        </button>
-                    </div>                  
+                    </div>                 
                 </div>
                 <div class="chart__viz" id="chart">
                     <div class="chart__circle">
-                        <p>Hombres entre 55 y 64 años:</p>
+                        <p class="chart__title">Hombres entre 55 y 64 años:</p>
                         <div id="circle--first"></div>
                     </div>
                     <div class="chart__circle">
-                        <p>Mujeres entre 55 y 64 años:</p>
+                        <p class="chart__title">Mujeres entre 55 y 64 años:</p>
                         <div id="circle--second"></div>
                     </div>
                 </div>
                 <!-- Pie de gráfico -->
                 <div class="chart__footer">
                     <div class="chart__source">
-                        <p class="chart__source--data"><span>Fuente: </span><span id="data-source">Eurostat (lfso_18redsted; consulta en febrero de 2022)</span> y Laboratorio de Estadísticas Experimentales (CSIC)</p>
+                        <p class="chart__source--data"><span>Fuente: </span><span>Eurostat (lfso_18redsted; consulta en febrero de 2022)</span> y Laboratorio de Estadísticas Experimentales (CSIC)</p>
                         <p class="chart__source--copyright"><a class="link" href="https://creativecommons.org/licenses/by/4.0/deed.en_US" target="_blank">CC BY 4.0</a></p>
                     </div>
-                    <p class="chart__note"><span>Notas: </span><span id="data-note">La base de datos utilizados tiene como título "Persons in employment or with previous employment experience by effects of care of incapacitated relatives".</span></p>
+                    <p class="chart__note"><span>Notas: </span><span>La base de datos utilizados tiene como título "Persons in employment or with previous employment experience by effects of care of incapacitated relatives".</span></p>
                 </div>
                 <div class="logo">
                     <img src="https://raw.githubusercontent.com/CarlosMunozDiazCSIC/informe_perfil_mayores_2022_social_4_6/main/pre/iegd_logo.png" alt="Logo del Instituto de Economía, Geografía y Demografía (IEGD) del CSIC" width="100%" height="100%">
@@ -103,10 +97,7 @@
                 <li class="tab tab--rrss" data-target="b-rrss"><i class="fa fa--share fa-share-alt"></i></li>
             </ul>
         </nav>
-        <div class="chart__tooltip" id="tooltip">
-            <p class="chart__tooltip--title"></p>
-            <p class="chart__tooltip--text"></p>
-        </div>  
+        <div class="chart__tooltip" id="tooltip"></div>  
     </div>
     <!-- Uso de PYMJS para alturas dinámicas -->
     <script type="text/javascript" src="https://pym.nprapps.org/pym.v1.min.js"></script>
