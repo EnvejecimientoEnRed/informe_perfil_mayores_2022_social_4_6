@@ -13,7 +13,7 @@ COLOR_ANAG_PRIM_2 = '#9E6C51',
 COLOR_ANAG_PRIM_3 = '#9E3515',
 COLOR_GREY_1 = '#D6D6D6';
 
-export function initChart(iframe) {
+export function initChart() {
     //Desarrollo del gráfico
     d3.csv('https://raw.githubusercontent.com/CarlosMunozDiazCSIC/informe_perfil_mayores_2022_social_4_6/main/data/efectos_cuidado_empleo_eurostat_v2.csv', function(error,data) {
         if (error) throw error;
@@ -326,6 +326,10 @@ export function initChart(iframe) {
         //Animación del gráfico
         document.getElementById('replay').addEventListener('click', function() {
             animateChart();
+
+            setTimeout(() => {
+                setChartCanvas();
+            }, 4000);
         });
 
         /////
@@ -341,7 +345,9 @@ export function initChart(iframe) {
         setRRSSLinks('efectos_cuidado_personas');
 
         //Captura de pantalla de la visualización
-        setChartCanvas();
+        setTimeout(() => {
+            setChartCanvas();
+        }, 4000);
 
         let pngDownload = document.getElementById('pngImage');
 
@@ -350,6 +356,6 @@ export function initChart(iframe) {
         });
 
         //Altura del frame
-        setChartHeight(iframe);    
+        setChartHeight();    
     });    
 }
