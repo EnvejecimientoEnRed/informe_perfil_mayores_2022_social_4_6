@@ -9,8 +9,8 @@ import { setFixedIframeUrl } from './chart_helpers';
 //Colores fijos
 const COLOR_PRIMARY_1 = '#F8B05C',
 COLOR_ANAG_PRIM_1 = '#BA9D5F', 
-COLOR_ANAG_PRIM_2 = '#9E6C51',
-COLOR_ANAG_PRIM_3 = '#9E3515',
+COLOR_COMP_2 = '#AADCE0',
+COLOR_COMP_1 = '#528FAD',
 COLOR_GREY_1 = '#D6D6D6';
 
 export function initChart() {
@@ -45,7 +45,7 @@ export function initChart() {
 
         let color = d3.scaleOrdinal()
             .domain(data.map(function(item) { return item.EFFEMP; }).keys())
-            .range([COLOR_PRIMARY_1, COLOR_ANAG_PRIM_1, COLOR_ANAG_PRIM_2, COLOR_ANAG_PRIM_3, COLOR_GREY_1]); 
+            .range([COLOR_PRIMARY_1, COLOR_ANAG_PRIM_1, COLOR_COMP_2, COLOR_COMP_1, COLOR_GREY_1]); 
 
         let pieHombres = d3.pie()
             .sort(null)
