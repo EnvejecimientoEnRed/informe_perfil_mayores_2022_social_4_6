@@ -15,7 +15,7 @@ COLOR_GREY_1 = '#D6D6D6';
 
 export function initChart() {
     //Desarrollo del gráfico
-    d3.csv('https://raw.githubusercontent.com/CarlosMunozDiazCSIC/informe_perfil_mayores_2022_social_4_6/main/data/efectos_cuidado_empleo_eurostat_v2.csv', function(error,data) {
+    d3.csv('https://raw.githubusercontent.com/EnvejecimientoEnRed/informe_perfil_mayores_2022_social_4_6/main/data/efectos_cuidado_empleo_eurostat_v2.csv', function(error,data) {
         if (error) throw error;
 
         let pathsMen, pathsWomen;
